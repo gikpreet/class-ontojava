@@ -1,6 +1,6 @@
 # Chapter 2: 간단한 프로그램의 컴파일과 실행
 
-## 23
+== 23
 
 이 단원에서는 영화의 대본, 연기, 감독에 대해 제공된 등급에서 영화의 전체 등급을 계산하는 간단한 프로그램을 컴파일하고 실행합니다. 표준 용어들 또한 검토합니다.
 
@@ -62,3 +62,114 @@ public static void main(String [] args) {
     6 + 9 + 8;
 }
 ----
+
+main 정의(definition)를 이해하기 위해서, 하나 하나 확대하여 살펴봐야 합니다. main 정의를 사용하여 34 항목 에서 정의할 클래스 내에 정의합니다.
+
+## 32
+
+키워드(Keywords)는 특별한 의미를 가지는 Java의 속성입니다. 앞의 3개의 단어는 키워드입니다.
+
+[source, java]
+----
+[    Keywords    ]
+public static void main(String[] args) {
+    6 + 9 + 8;
+}
+----
+
+* 키워드 public은 main 메소드의 접근 제한을 나타냅니다. 상세한 내용은 Chapter 15를 참조합니다.
+* 키워드 static은 main 메소드가 인스턴스 메소드(instance method)가 아닌 클래스 메소드(class method)임을 나타납니다. 자세한 내용은 Chapter 10을 참조합니다.
+* 키워드 void는 main 메소드가 반환 값을 가지지 않는다는 것을 나타냅니다. 자세한 내용은 Chapte 5를 참조합니다.
+
+지금은 세 키워드를 main 메소드를 선언하기 위한 지켜야할 절차로 생각합니다. Java language를 배우면 이에 대해 자세히 알게 됩니다.
+
+## 33
+
+메소드 이름 뒤에는 괄호로 둘러싸인 파라미터 명세(parameter specification)가 있습니다.
+
+[source, java]
+----
+                       [ Parameters  ]
+public static void main(String[] args) {
+    6 + 9 + 8;
+}
+----
+
+파라미터 명세에 대해서는 Chapter 5에서 자세히 알아보며, main 메소드의 파라미터 명세에 대해서는 Chapter 29에서 자세히 알아봅니다.
+
+지금은 파라미터 명세는 main 메소드를 선언하기 위해 지켜야 할 절차로 생각합니다. Java language를 배우면 이에 대해 자세히 알게 됩니다.
+
+## 34
+
+마지막으로, 메소드의 본문(body)로 이동합니다. 일반적으로 메소드의 body는 중괄호({ 와 })로 둘러싸인 하나 이상의 statement(문)으로 구성되어 Java 컴파일러에 수행할 연산을 알려줍니다. 예제에서 body는 하나의 statement만 표시합니다.
+
+[source, java]
+----
+public static void main(String[] args) {
+    6 + 9 + 8;
+}
+----
+
+대부문의 Java에서의 statement와 마찬가지로, 이 statement는 6 + 9 + 8 및 statement terminator인 세미콜론( ; )으로 구성됩니다.
+
+## 35
+
+main 메소드를 클래스 정의(class definition)에 포함시킬 준비가 되었습니다. 데모 프로그램을 작성하고 있으므로, 클래스 이름을 Demonstrate로 정합니다.
+
+소스 파일에 클래스 정의를 반드시 저장해야 합니다. 소스 파일의 이름은 파일에 포함된 클래스의 이름인 Demonstrate로, 확장자는 .java이어야 합니다.
+
+## 36
+
+대부분의 Java 프로그래머는 관례에 따라 각 클래스 이름을 대문자로 시작합니다. 다른 프로그래머들이 이해하기 쉬운 코드를 쓰기 위해 이 규칙을 준수하는 것이 좋습니다. 
+
+## 37
+
+Demonstration 클래스는 **public**과 **class**, 두 키워드로 시작합니다.
+
+[source, java]
+----
+[ Keywords ]
+public class Demonstrate {
+    ...
+}
+----
+
+* 키워드 public은 Demonstrate 클래스의 접근 제한을 나타냅니다. 
+* 키워드 class는 클래스가 정의됨을 나타냅니다.
+
+## 38
+
+Demonstrate로 이름 붙인 클래스를 따라가면 클래스 정의 본문(body)가 나옵니다. 예제에서, body에는 영화의 각본, 연기, 연출에 대한 등급이 지정되면 영화의 등급을 계산하는 단일 메소드 정의 - main 메소드 - 가 포함됩니다.
+
+[source, java]
+----
+public class Demonstrate {
+    public static void main(String[] args) {
+        6 + 9 + 8;
+    }
+}
+----
+
+## 39
+
+세미콜론 ; , 괄호 ( ), 중괄호 { }는 구두점 역할을 합니다. 이런 맥락에서 이런 것들을 punctuator라고 부릅니다.
+
+## 40
+
+샘플 프로그램은 입력 데이터를 받아들이지 않고, 출력 결과를 생성하지 않습니다. 그리고 프로그램이 수행하는 arithmetric 연산에 대해 아무 작업도 수행하지 않으므로, 컴파일러는 해당 프로그램의 컴파일을 거부합니다.
+
+## 41
+
+Java 컴파일러에 표시되기 원하는 정보를 출력하도록 display statement를 포함할 수 있습니다. 아래와 같이 수정된 프로그램은, 실행되면 The rating of the movie is 23 이라고 출력합니다.
+
+[source, java]
+----
+public class Demonstrate {
+    public static void main(String[] args) {
+        System.out.println("The rating of the movie is ")l
+        System.out.println(6 + 9 + 8);
+    }
+}
+----
+
+수정된 프로그램은 새로운 몇 가지 컨셉을 포함하고 있습니다. 이를 하나 하나 살펴봅니다.
