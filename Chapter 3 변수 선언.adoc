@@ -1,0 +1,281 @@
+# Chapter 3: 변수 선언
+
+이 단원에서는 Java에서 변수를 선언하는 방법과 이 책의 나머지 부분에서 사용되는 용어에 대해 배웁니다.
+
+## 58
+
+Java에서 **식별자(Identitfier)**는 문자와 숫자로 구성된 이름이며, 첫 글자는 반드시 문자여야 합니다.
+
+자바 프로그래머 대부분은 단어를 이어서 긴 식별자를 만들 때 밑줄을 사용하지 않습니다. 대신 첫 번째 단어는 소문자로 시작하고 각 내부 단어는 대문자로 시작합니다. 예를 들면, **movieRating** 과 같이 씁니다. 이 규칙을 따르는 것이 좋습니다. 그렇지 않으면 다른 프로그래머들이 여러분의 프로그램을 이해하기 어려울 수 있습니다.
+
+## 59
+
+**변수(Variable)**는 값을 포함하는 컴퓨터 메모리의 덩어리입니다. 변수의 **이름**은 변수를 참조하는 identifier입니다.
+
+변수의 **data type**은 덩어리의 크기와 덩어리의 비트가 해석되는 방식을 결정합니다. 변수의 데이터 유형이 int인 경우 변수는 32비트 부호 있는 정수를 가집니다. 변수의 데이터 유형이 double인 경우 변수는 64비트 부호 있는 부동 소수점 숫자를 가집니다.
+
+프로그램이 실행되는 동안 변수의 값은 변경될 수 있지만 변수의 데이터 유형은 절대 변경되지 않습니다. 따라서 변수의 이름이 **script**이고 타입이 **int**인 경우 변수의 값은 한 번은 8이고 다음은 **9**일 수 있지만 **script**의 값은 **8.5**와 같은 유형이 **double**이 될 수는 없습니다.
+
+## 60
+
+모든 변수는 특정 타입이기 때문에 Java 컴파일러는 변수의 크기에 맞는 메모리 덩어리를 한 번만 할당할 수 있습니다. 이를 통해 변수의 값은 항상 할당된 메모리 덩어리 내에 들어갈 수 있다는 사실을 활용할 수 있습니다.
+
+## 61
+
+변수의 Type을 Java 컴파일러에게 알리는 것을 변수를 **선언(declare)**한다고 합니다. 따라서, 다음 코드는 세 개의 변수 선언을 보여줍니다. 각각의 변수는 데이터 유형을 나타내는 **int** 키워드로 시작하기 때문에 모두 정수 변수로 선언됩니다.
+
+[source, java]
+----
+public class Demonstrate {
+  public static void main (String [] args) {
+    int script;
+    int acting;
+    int direction;
+    ...
+  }
+}
+----
+
+## 62
+
+각 변수가 동일한 데이터 유형을 갖는 경우 여러 개의 별도 변수 선언을 하나의 더 간결한 변수 선언으로 결합할 수 있습니다. 예를 들어, 다음 코드에서 모든 세 변수는 한 번에 정수 변수로 선언됩니다.
+
+[source, java]
+----
+public class Demonstrate {
+  public static void main (String [] args) {
+    int script, acting, direction;
+    ...
+  }
+}
+----
+
+변수를 구분하는 쉼표에 유의하십시오.
+
+하지만, 실제 사용에서는 최근 관례에 따라 개별 변수마다 선언해주는 것이 좋습니다.
+
+## 63
+
+변수에 할당된 메모리 덩어리에 값을 저장하는 것을 **변수 할당(Variable Assignment)**이라고 합니다. 따라서 Java가 이러한 메모리 덩어리에 값을 넣을 때마다 변수는 **값이 할당(assign a value)**되었다고 하며 값을 **변수에 할당(assigned to the variable)**했다고 합니다.
+
+## 64
+
+변수를 초기화 할 수 있습니다. 변수가 선언된 동일한 문장에서 초기화 할 수 있습니다.
+
+[Source, java]
+----
+public class Demonstrate {
+  public static void main (String [] args) {
+    int script = 6;
+    int acting = 9;
+    int direction = 8;
+    ...
+  }
+}
+----
+
+여러 선언을 초기화와 함께 하나의 간결한 문장으로 결합할 수 있습니다. 다음 예제와 같습니다.
+
+[source, java]
+----
+public class Demonstrate {
+  public static void main (String [] args) {
+    int script = 6, acting = 9, direction = 8;
+    ...
+  }
+}
+----
+
+다시 한번, 쉼표를 꼭 기억하세요.
+
+## 65
+
+모든 Java 변수는 초기화되거나 할당되기 전까지 **기본값(default value)**을 가집니다. 따라서 Java 변수는 언제나 값을 가지고 있습니다. 숫자의 기본값은 **0**입니다.
+
+Java는 기본값을 제공하지만 변수에 값을 할당하도록 요구합니다. 변수의 값을 사용하기 전에 변수에 값을 할당하지 않은 것으로 판단할 수 있다면 Java는 프로그램을 컴파일하지 않습니다.
+
+## 66
+
+현재 샘플 프로그램은 초기화된 변수를 통해 설정된 테스트 데이터를 사용합니다. 나중에 Chapter 27 에서는 파일을 통해 제공하는 테스트 데이터를 사용하는 방법을 배우게 됩니다. Chapter 49 에서는 그래픽 사용자 인터페이스의 텍스트 필드를 통해 데이터를 제공하는 방법을 배우게 됩니다.
+
+## 67
+
+변수의 값을 변경하려면 **할당 연산자(assignment operator), =**를 사용합니다. 다음 프로그램에는 세 가지 할당 문이 있습니다.
+
+[source, java]
+----
+public class Demonstrate {
+    public static void main (String argv[]) {
+        int result, script = 6, acting = 9, direction = 8;
+        result = script;
+        result = result + acting;
+        result = result + direction;
+        System.out.print("The rating of the movie is ");
+        System.out.println(result);
+    }
+}
+----
+
+물론 이 프로그램은 조금 어색합니다. 계산을 세 개의 별도 문으로 분할하는 유일한 이유는 변수를 할당하고 다시 할당할 수 있다는 것을 보여주기 위해서입니다.
+
+## 68
+
+변수 선언 문은 다른 모든 문 앞에 있을 필요가 없습니다. 그러므로 대부분의 프로그래머는 다음 예제와 같이 각 변수를 처음 사용할 때 가까이 선언하는 것을 선호합니다.
+
+[source, java]
+----
+public class Demonstrate {
+    public static void main (String argv[]) {
+        int result, script = 6;
+        result = script;
+        int acting = 9;
+        result = result + acting;
+        int direction = 8;
+        result = result + direction;
+        System.out.print("The rating of the movie is ");
+        System.out.println(result);
+    }
+}
+----
+
+## 69
+
+정수를 저장하기 위해 Java는 **byte**, **short**, **int** 및 **long**의 data type을 제공합니다. Java 컴파일러 구현자는 다음과 같은 표준 바이트 수를 사용해야 합니다.
+
+[cols=3, options="header"]
+|=========================
+| Type  | Bytes | Stores
+| byte  |   1   |  정수
+| short |   2   |  정수
+| int   |   4   |  정수
+| ling  |   8   |  정수
+|=========================
+
+## 70
+
+**char** 데이터 유형은 일반적으로 문자를 저장하기 위해 사용됩니다. 그러나 문자 코드는 정수로 볼 수 있기 때문에 **char**도 **byte**, **short**, **int** 및 **long**과 같은 정수 데이터 유형 중 하나로 볼 수 있습니다. Java는 영어뿐만 아니라 벵골어, 칸나다어 및 텔루구어와 같은 많은 세계 언어의 문자를 수용하기 위해 **char** 데이터 유형에 2바이트를 사용합니다.
+
+## 71
+
+byte, short, int 및 long 데이터 유형은 음수를 수용하기 위해 부호를 가지고 있습니다. char 데이터 유형은 부호가 없습니다.
+
+## 72
+
+floating point 숫자를 저장하기 위해 Java는 **float** 및 **double** 두 가지 데이터 유형을 제공합니다. Java 컴파일러 작성자는 다음과 같은 표준 바이트 수를 사용해야 합니다.
+
+[cols=3, options="header"]
+|=========================
+| Type  | Bytes | Stores
+| float  |   4   |  정수
+| double |   8   |  정수
+|=========================
+
+## 73
+
+C 및 C++ 컴파일러의 구현자들은 상대적인 길이 제약 조건을 준수한다면 정수 및 부동 소수점 유형에 대해 원하는 만큼 많은 바이트를 사용할 수 있습니다. 그러나 유연성은 이식성에 방해가 되므로 Java는 각 데이터 유형에 대해 표준 바이트 수를 사용하도록 컴파일러 구현자를 요구합니다.
+
+## 74
+
+대부분의 정수에 대해 **byte** 및 **short** 정수 유형은 조금 작으며 **long**은 불필요하게 크므로 이들 사이에 위치한 int 데이터 유형이 인기가 있습니다. 대부분의 부동 소수점 수에 대해 **float** 부동 소수점 유형은 조금 작기 때문에 두 배 큰 **double** 데이터 유형이 인기가 있습니다. 따라서 이 책의 나머지 프로그램은 모든 정수에 대해 **int**를 사용하고 모든 부동 소수점 수에 대해 double을 사용합니다.
+
+## 75 부가 설명
+
+경험 많은 프로그래머들은 실행 속도를 최대화하거나 프로그램 크기를 최소화하는 경우에 byte, short 또는 float를 사용합니다.
+
+## 76
+
+모든 정수 및 부동 소수점 유형은 원시 유형(primitive types)이라고 하며, 21장에서 배우게 되는 불리언 유형과 31장에서 자세히 배우게 되는 문자 유형도 마찬가지입니다. 다른 모든 유형은 참조 유형(reference types)이라고합니다. 참조 유형에는 문자열, 배열 및 직접 정의한 유형이 포함되며, 9장에서 배우기 시작합니다.
+
+## 77
+
+Java 프로그램에 주석(comments)을 두 가지 방법으로 추가할 수 있습니다. 첫째, Java 컴파일러가 한 줄의 어디에 있든 두 개의 연속 슬래시 **//**를 만나면 Java 컴파일러는 두 슬래시와 슬래시가 나타나는 줄의 나머지 부분을 모두 무시합니다.
+
+[source, java]
+----
+// Short comment
+----
+
+둘째, Java가 슬래시 바로 뒤에 별표인 **"/*"**를 만나면, Java는 해당 문자를 무시하고 다음 별표 뒤에 바로 슬래시가 오는 **"*/"**까지 모든 문자를 무시합니다.
+
+[source, java]
+----
+/*
+Long comment
+that just goes on
+and on
+*/
+----
+
+소스 코드에서 특정 라인을 삭제하여 프로그램이 작동하는 방식을 테스트하려면 해당 라인을 삭제하는 대신 주석으로 숨길 수 있습니다.
+
+## 78: 부가 설명
+Java 문서에서는 슬래시와 두 개의 별표로 시작하고 왼쪽에 별표가 있는 주석을 자주 볼 수 있습니다.
+
+[source, java]
+----
+/**
+ * A documentation comment
+ * with a left column filled
+ * with asterisks
+ */
+----
+
+이러한 주석은 웹 브라우저에서 표시되는 문서를 준비하는 프로그램에서 인식하고 처리하기 위해 설계되었습니다.
+
+## 79: 부가 설명
+많은 프로그래머들은 주석을 작성하는 개인적인 스타일을 개발하여 별표나 다른 독특한 문자로 꾸미기 때문에 주석이 매력적이고 찾기 쉽게 만듭니다.
+
+## 80
+/ ... / 주석을 다른 / ... / 주석 내에 놓을 수 없습니다. 이렇게하면 내부 주석의 종결자 ***/**가 외부 주석을 종결하여 Java 컴파일러가 프로그램을 컴파일 할 수 없습니다.
+
+[source, java]
+----
+/*  <-----------------------------------*
+                                        |
+First part of outer comment             |
+                                        |
+/*  <-- Commented out                   | Delimiter, */, of inner
+                                        | comment terminates delimiter,
+Inner comment                           | /*, of outer comment
+                                        |
+*/ -------------------------------------*
+
+Second part of outer comment
+
+*/  <-- Dangles
+----
+
+## 81: 연습 문제
+
+지구의 부피를 계산하는 프로그램을 작성합니다. r 변수를 사용하여 지구의 반지름을 연결합니다.
+
+## 82: Summerize
+
+* 변수는 메모리 조각을 이름 지정하는 식별자입니다.
+
+* 정수 데이터 유형은 char, byte, short, int 및 long입니다.
+
+* 부동 소수점 데이터 유형은 float 및 double입니다.
+
+* 정수, 부동 소수점 및 부울 데이터 유형은 원시 데이터 유형입니다.
+
+* 한 줄 주석을 작성하려면, 주석을 **//**로 시작합니다.
+
+* 여러 줄 짜리 주석을 작성하려면, 그 주석을 */ ... */**로 구분합니다.
+
+* 변수를 도입하려면, 변수 선언에서 해당 변수의 데이터 유형을 선언해야 합니다.
+
+[source, java]
+----
+data type variable name;
+----
+
+* 변수에 초기 할당을 제공하려면, 해당 초기 할당을 선언 문에 포함시킬 수 있습니다.
+
+* data type variable name = initial-value expression;
+변수가 선언 된 후 변수에 할당하려면, 할당 문을 사용하십시오.
+
+[source, java]
+----
+variable name = new-value expression;
+----
