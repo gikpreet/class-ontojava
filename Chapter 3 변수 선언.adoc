@@ -62,7 +62,7 @@ public class Demonstrate {
 
 변수를 초기화 할 수 있습니다. 변수가 선언된 동일한 문장에서 초기화 할 수 있습니다.
 
-[Source, java]
+[source, java]
 ----
 public class Demonstrate {
   public static void main (String [] args) {
@@ -76,7 +76,7 @@ public class Demonstrate {
 
 여러 선언을 초기화와 함께 하나의 간결한 문장으로 결합할 수 있습니다. 다음 예제와 같습니다.
 
-[Source, java]
+[source, java]
 ----
 public class Demonstrate {
   public static void main (String [] args) {
