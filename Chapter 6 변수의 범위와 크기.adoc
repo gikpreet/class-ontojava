@@ -1,0 +1,156 @@
+= Chapter 6: 변수의 범위와 크기
+
+이 장에서는 Parameter와 Variable이 계산되거나 할당될 수 있는 위치를 배웁니다.
+
+== 129
+
+메소드에 들어가는 Parameter 값은 메소드 내에서만 사용 가능하다는 것을 아는 것이 중요합니다. Java는 메소드 외부에서 동일한 Parameter 이름을 사용하는 경우를 보호하기 위해 격리 울타리를 만드는 것 처럼 작동합니다.
+
+아래의 movieRating을 살펴봅시다:
+
+[source, java]
+----
+public class Movie {
+  // Define movieRating:
+  public static int movieRating (int s, int a, int d) {
+	  return s + a + d;
+  }
+}
+----
+
+**movieRating**을 사용할 때 s, a, d라는 다른 변수의 기존 값은 무시됩니다.
+
+[source, bash]
+----
+movieRating fence-----------------*   The values of s, a, and d  
+| The value of s, a, and d inside |   outside the fence, if any, 
+| this fence are isolated from    |   are not affected by the 
+| the values outside              |   values inside 
+|                                 | 
+| movieRating method computes the | 
+| value of s + a + d using the    | 
+| values inside this fence        | 
+*---------------------------------*
+----
+
+== 130
+
+Java가 각 메소드 Parameter에 대해 메모리 뭉치를 예약하고, 메소드가 호출될 때 마다 argument 값을 그 예약된 메모리 뭉치로 복사하기 때문에, 일반적으로 Java는 Primitive Type의 Parameter에 대해 새로운 메모리 뭉치를 예약합니다.
+
+[source, java]
+----
+Memory reserved                 Memory that supplies a value for 
+for a variable in               a corresponding parametern in 
+calling program                 called program 
+  |                               | 
+  v                               v 
+*------*     Copy operation     *------* 
+|      | ---------------------> |      | 
+*------*                        *------* 
+----
+
+예를 들어 **moveiRating**을 고려할 때, 정수 parameter s, a, d 각각에 대해 새로운 메모리 뭉치가 예약되며 argument 값이 해당 메모리 뭉치로 복사됩니다.
+
+== 131
+
+이러한 이유로 Java의 parameter는 **값에 의한 호출 Parameter(call-by-calue parameters)** 라고 하며, Java는 **값에 의한 호출 언어(call-by-value language)**라고 합니다.
+
+== 132 부가 설명
+
+일부 언어의 특징인 **참조에 의한 호출 parameter(call-by-reference parameter)**라는 것이 있습니다. parameter가 참조에 의한 호출 parameter이고 대응되는 arguement가 변수인 경우, parameter는 argument 변수와 동일한 메모리 뭉치를 공유합니다.
+
+[source, java]
+----
+Memory reserved                 Memory supplying a value for
+for a variable in               a corresponding parameter in
+calling program                 called program
+|                               |
+| *----------------------------*
+v v
+*------*
+|      |
+*------*
+----
+
+Parameter가 참조에 의한 호출 parameter이고, 대응되는 인수가 변수인 경우, 호출된 프로그램 내에서 parameter 재 할당은 호출하는 프로그램 외부로 전파됩니다.
+
+== 133
+
+다음 프로그램은 parameter 값의 제한된 사용 가능성을 보여주기 위해 **movingRating**을 어색하게 정의합니다.
+
+[source, java]
+----
+public class Demonstrate {
+  // First, define adder:
+  public static int adder () {
+	  return s + a + d;                                     // BUG!
+  }
+  // Next, define movieRating:
+  public static int movieRating (int s, int a, int d) {
+  	return adder();                                       // BUG!
+  }
+  // Then, define main:
+  public static void main (String [] args) {
+    int script = 6;
+    int acting = 9;
+    int direction = 8;
+    int result;
+    
+    result = movieRating(script, acting, direction);
+    System.out.print("The rating of the movie is ");
+    System.out.println(s + a + d);                       // BUG!
+  }
+}
+----
+
+== 133
+
+다음 프로그램은 parameter 값의 제한된 사용 가능성을 보여주기 위해 **movieRating**을 어색하게 정의합니다.
+
+[source, java]
+----
+public class Demonstrate {
+  // First, define adder:
+  public static int adder () {
+	  return s + a + d;                                     // BUG!
+  }
+  // Next, define movieRating:
+  public static int movieRating (int s, int a, int d) {
+  	return adder();                                       // BUG!
+  }
+  // Then, define main:
+  public static void main (String [] args) {
+    int script = 6;
+    int acting = 9;
+    int direction = 8;
+    int result;
+    
+    result = movieRating(script, acting, direction);
+    System.out.print("The rating of the movie is ");
+    System.out.println(s + a + d);                       // BUG!
+  }
+}
+----
+
+이 프로그램에서 **movingRating**는 parameter가 없는 adder 메소드에 **s + a + d**를 계산하도록 요청합니다. 그러나 Java 컴파일러는 **adder**를 컴파일 할 수 없습니다. 왜냐하면 **s,a, d** parameter의 값이 **adder** 메소드가 정의되고 있는 외부를 나타내는 식에서 사용되지 않기 때문입니다. 따라서 **adder**메소드에서 사용할 수 없습니다.
+
+== 134
+
+블록(Block)은 중괄호로 묶인 문장의 시퀀스입니다. 따라서 메소드 본문과 마찬가지로 블록은 중괄호로 묶인 다른 문장의 시퀀스입니다.
+
+Java의 **if** 및 **if-else** 문에서 블록이 자주 사용되기 때문에 메소드 본문이 아닌 블록의 예제를 Chapter 22에서 볼 수 있습니다.
+
+== 135
+
+블록 내에서 선언된 변수를 지역 변수(local variable)라고 합니다. 지역 변수 값은 해당 지역 변수가 선언된 블록 내부에 나타나는 문장에서만 사용할 수 있습니다.
+
+**Parameter**는 메소드 본문 내에서 선언된 지역 변수로 처리됩니다. 따라서 parameter는 arguemnt 값으로 초기화 된 지역 변수입니다.
+
+== 136
+
+Parameter와 지역 변수는 해당 parameter와 지역 변수가 선언된 블록에서만 평가 및 할당할 수 있으므로 **지역 범위(local scope)**를 갖습니다.
+
+== 137
+
+* 지역 변수는 메소드 본몬으로 구성되는 블록 내에서 선언된 변수입니다.
+* Java는 parameter와 지역 변수를 격리하므로 이름을 다시 사용할 수 있습니다. 메소드의 parameter와 지역 변수 값은 메소드 정의 외부에 나타나는 식에서 사용할 수 없습니다.
