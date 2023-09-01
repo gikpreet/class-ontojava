@@ -389,6 +389,8 @@ Random number (0.0 to 1.0): 0.8520107471627543
 1/2 mv^2
 ++++
 
+$$1 /over b$$
+
 으로 주어집니다. 두 지정된 속도에서 이동하는 자동차의 에너지 비율을 결정하는 프로그램을 작성하세요. 솔루션에서 **square**라는 메소드를 작성하고 사용하세요.
 
 [stem]
@@ -436,4 +438,4 @@ public class class name {
 [source, bash]
 ----
 [class name].[method name](ordinary arguments)
---
+----
