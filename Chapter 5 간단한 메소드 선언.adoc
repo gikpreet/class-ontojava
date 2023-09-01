@@ -29,16 +29,6 @@ public class Demonstrate {
 * 식 s + a + d을 계산합니다.
 * 다른 계산에 사용하기 위해 s + a + d의 값을 반환합니다.
 
-## 100
-
-**movieRating** 메서드를 호출 할 때마다 Java 컴파일러는 다음을 수행해야합니다.
-
-* 사용할 movieRating 메서드를 결정합니다.
-* 인수 표현식을 평가합니다.
-* 매개변수 - 즉 s, a 및 d와 같은 매개변수에 인수 표현식 값을 할당합니다.
-* 식 s + a + d을 계산합니다.
-* 다른 계산에 사용하기 위해 s + a + d의 값을 반환합니다.
-
 ## 101
 
 **movieRating** 메소드를 다음과 같이 정의합니다.
@@ -118,3 +108,313 @@ public class Demonstrate {
 The rating of the movie is 23
 ----
 
+== 107
+대부분의 Java 프로그래머는 관례적으로 각 메서드 이름을 소문자로 시작하고 메서드 이름의 각 내부 단어를 대문자로 씁니다. 따라서, 이 관례에 따라 프로그램을 작성하는 것이 좋으며, 그렇지 않으면 다른 프로그래머가 해당 프로그램을 이해하는 데 어려움을 겪을 수 있습니다.
+
+== 108
+매개변수 선언에서 데이터 유형은 변수 선언의 데이터 유형과 달리 쉼표를 통해 전파되지 않으므로 각 매개변수의 데이터 유형을 지정해야합니다.
+
+[source, java]
+----
+
+                                  *-- BUG: Data type does not propagate
+                                  v
+                              -----------
+public static int movieRating (int s, a, d) {
+  ...
+}
+----
+
+== 109
+Java 컴파일러는 메서드의 정의가 해당 메서드의 호출이 나타나는 위치 앞에 나타나도록 Java 프로그램을 요구하지 않습니다. 따라서 main에서 movieRating를 호출하더라도 movieRating을 main앞에 정의할 필요는 없습니다.
+
+이러한 면에서 Java는 함수 - 즉 메서드의 본질적인 상응물 -을 사용하는 C 또는 C ++보다 훨씬 쉬워집니다.
+
+== 110: 부가 설명
+메서드의 반환 값에 대한 데이터 유형은 반드시 지정되어야 합니다.
+
+== 111
+일부 메서드는 값을 반환하지 않고, 값 표시와 같은 다른 목적으로 사용됩니다.
+
+따라서, Java는 반환 값 데이터 유형으로 void를 사용할 수 있도록 허용하고, void가 반환 값 데이터 유형으로 사용된 것을 보면 해당 메소드는 아무것도 반환하지 않아야 한다는 것을 알고 있습니다.
+
+== 112
+예를 들어, [Segment 106]의 프로그램 변형에서는 displayMovieRating 메서드에서 디스플레이가 처리되므로 반환 할 값이 없습니다. 따라서 displayMovieRating 정의에서 데이터 유형 이름 대신 void가 제공되며 displayMovieRating에는 반환 문 - 즉, return 키워드가 포함 된 문이 없습니다.
+
+[source, java]
+----
+public class Demonstrate {
+  public static void main (String [] args) {
+    int script = 6;
+    int acting = 9;
+    int direction = 8;
+
+    displayMovieRating(script, acting, direction);
+  }
+  public static void displayMovieRating (int s, int a, int d) {
+    System.out.print("The rating of the movie is ");
+    System.out.println(s + a + d);
+  }
+}
+----
+
+[source, bash]
+----
+--- Result ---
+The rating of the movie is 23
+----
+
+displayMovieRating에는 반환 문이 없으므로 해당 메서드는 아무것도 반환하지 않는다고 합니다. 이러한 동작은 void 반환 유형을 갖는 메서드에만 허용됩니다.
+
+까다로운 프로그래머는 끝에서 떨어져 나가는 메서드를 정의하는 것이 우아하지 않다고 생각합니다. 이러한 프로그래머는 displayMovieRating의 다음 약간 수정된 버전과 같이 빈 return 문을 작성합니다.
+
+[source, java]
+----
+public class Demonstrate {
+  public static void main (String [] args) {
+    int script = 6;
+    int acting = 9;
+    int direction = 8;
+
+    displayMovieRating(script, acting, direction);
+  }
+  public static void displayMovieRating (int s, int a, int d) {
+    System.out.print("The rating of the movie is ");
+    System.out.println(s + a + d);
+    return;
+  }
+}
+----
+
+== 114
+
+main 메서드에서 호출하는 movieRating 메서드가 정의된 클래스와 다른 클래스에 movieRating을 정의하면 메서드 이름 앞에 클래스 이름을 접두사로 붙여 두 클래스 이름을 마침표로 결합해야 합니다.
+
+예를 들어 Movie.java 파일의 Movie 클래스에서 movieRating을 정의 한 후 Demonstrate.java 파일의 Demonstrate 클래스에서 main을 정의 할 수 있습니다.
+
+[source, java]
+----
+// Movie class defined in Movie.java
+public class Movie {
+  public static int movieRating (int s, int a, int d) {
+    return s + a + d;
+  }
+}
+----
+
+그런 다음 Demonstrate.java 파일의 Demonstrate 클래스에서 main을 정의 할 수 있습니다.
+
+[source, java]
+----
+// Demonstrate class defined in Demonstrate.java
+public class Demonstrate {
+  public static void main (String [] args) {
+    int script = 6;
+    int acting = 9;
+    int direction = 8;
+    
+    System.out.print("The rating of the movie is ");
+    System.out.println(Movie.movieRating(script, acting, direction));
+  }
+}
+----
+
+== 115: 부가 설명
+여러 클래스를 동일한 파일에 정의할 수 있습니다. 이는 35장에서 배우게 됩니다. 그러나 지금 당장은 각 클래스를 전용 파일에 정의한다고 가정해야 합니다.
+
+== 116
+위의 Segment 114에서 보여지듯이, movieRating을 호출하는 클래스와 다른 클래스에서 movieRating을 정의하는 경우, 해당 메소드 movieRating 이름 앞에 정의된 클래스의 이름을 붙여야하며, 두 이름을 점으로 연결해야합니다.
+
+클래스 이름이 나타나는 이유는 Java에서 여러 클래스에서 movieRating 메소드를 정의할 수 있기 때문입니다. 따라서 항상 어떤 특정 movieRating 메소드를 사용할 것인지 지정해야합니다.
+
+== 117
+
+예를 들어, Movie 클래스 뿐만 아니라 JamesBondMovie 클래스도 정의할 수 있습니다. 여기서 movieRating 메소드는 제임스 본드 영화를 평가할 때 스크립트 매개 변수 값 대신 10을 사용해야 한다는 믿음을 반영합니다.
+
+[source, java]
+----
+public class JamesBondMovie {
+  public static int movieRating (int s, int a, int d) {
+    return 10 + a + d;
+  }
+}
+----
+
+== 118
+
+Movie 클래스와 JamesBondMovie 클래스를 모두 정의하고 컴파일한 후 둘 다 사용할 수 있습니다.
+
+[source, java]
+----
+public class Demonstrate {
+  public static void main (String [] argㄴ) {
+    int script = 6;
+    int acting = 9;
+    int direction = 8;
+
+    System.out.print("The ordinary rating of the movie is ");
+    System.out.println(Movie.movieRating(script, acting, direction));
+    System.out.print("The James Bond movie rating of the movie is ");
+    System.out.println(JamesBondMovie.movieRating(script, acting, direction));
+  }
+}
+----
+
+[source, bash]
+----
+--- Result ---
+The ordinary rating of the movie is 23
+The James Bond movie rating of the movie is 27
+----
+
+== 119
+
+메소드에 둘 이상의 정의가 있는 경우 메소드 이름은 오버로드(overload)되었다고 합니다. 오버로드라는 단어의 사용은 *"오버로드 된 회로가 퓨즈를 불태웠다"*와 같이 곧 무너질 것처럼 보입니다. 그러나 Java에서는 곧 무너질 것을 시사하는 것이 아닙니다. 메소드 오버로드를 다룰 수 있는 능력은 Java 언어의 강력한 기능 중 하나입니다.
+
+Java가 메소드 오버로드를 허용하기 때문에 Java는 다형성(polymorphic) 언어라고 합니다.
+
+== 120
+
+Java는 매개 변수 데이터 유형의 다른 배열을 갖는 여러 메소드를 같은 클래스 내에서 정의할 수 있도록 허용합니다. 반환 및 매개 변수 데이터 유형의 각 배열은 메소드 시그니처라고 합니다.
+
+예를 들어, 정수를 처리하는 displayMovieRating 메소드와 부동 소수점 수를 처리하는 displayMovieRating 메소드를 모두 정의할 수 있습니다. 그런 다음 두 메소드를 동일한 프로그램에서 사용할 수 있습니다.
+
+[source, java]
+----
+public class Demonstrate {
+  public static void main(String argv[]) {
+    int intScript = 6, intActing = 9, intDirection = 8;
+    double doubleScript = 6.0, doubleActing = 9.0, doubleDirection = 8.0;
+    displayMovieRating(intScript, intActing, intDirection);
+    displayMovieRating(doubleScript, doubleActing, doubleDirection);
+  }
+
+  // First, define displayMovieRating with integers:
+  public static void displayMovieRating(int s, int a, int d) {
+    System.out.print("The integer rating of the movie is ");
+    System.out.println(s + a + d);
+    return;
+  }
+
+  // Next, define displayMovieRating with floating-point numbers:
+  public static void displayMovieRating(double s, double a, double d) {
+    System.out.print("The floating-point rating of the movie is ");
+    System.out.println(s + a + d);
+    return;
+  }
+}
+----
+
+[source, bash]
+----
+---Result---
+The integer rating of the movie is 23
+The floating- point rating of the movie is 23.0
+----
+
+== 121
++ 연산자는 일반적으로 더하기를 의미하지만 피연산자 중 하나가 문자열인 경우 완전히 다른 의미를 가집니다. 이러한 경우 + 연산자는 다른 피연산자가 문자열이 아닌 경우 다른 피연산자를 문자열로 변환하고 두 문자열을 연결하여 세 번째 문자열을 생성합니다.
+
+연산자 + 가 두 가지 근본적으로 다른 의미를 가지고 있기 때문에 + 는 오버로드된 연산자라고 합니다.
+
+== 122
+
++ 연산자는 연결 연산자로 볼 때 출력문에서 자주 사용됩니다. 이러한 + 연산자의 사용은 종종 간결한 표시문을 가능하게 합니다.
+
+예를 들어, 다음과 같은 식을 작성할 수 있습니다.
+
+[source, java]
+----
+System.out.print("The rating of the movie is ");
+System.out.println(s + a + d);
+----
+
+그러나, 정보를 모으기 위해 연결을 사용하여 두 문장을 결합할 수 있습니다.
+
+[source, java]
+----
+System.out.print("The rating of the movie is " + (s + a + d));
+----
+
+위 문장에서는 더한 변수 주위에 괄호가 있어야 합니다. 괄호가 없으면 Java는 첫 번째 문자열을 s 값의 문자열로 변환 한 다음 a와d 값을 연결합니다. Java는 연결을 수행하지만 덧셈을 수행하지 않습니다.
+
+== 123: 부가 설명
+
+Java에서는 사용자 정의 오버로드된 연산자를 정의할 수 없지만 C++에서는 메소드와 연산자 모두를 오버로드 할 수 있습니다.
+
+그러나 Java 자체에는 오버로드 된 연산자가 있습니다. 연결에 대한 + 연산자의 사용은 두드러진 예입니다. 여러 산술 유형을 모두 더하기 위해 + 연산자를 사용하는 것은 덜 두드러진 예입니다.
+
+== 124: 부가 설명
+
+Java는 Math 클래스를 위한 다양한 강력한 내장 클래스 메소드를 제공합니다. 다음은 예입니다.
+
+[source, java]
+----
+public class Demonstrate {
+  public static void main(String[] args) {
+    System.out.println("Natural logarithm of 10:    " + Math.log(10));
+    System.out.println("Absolute value of -10:      " + Math.abs(-10));
+    System.out.println("Maximum of 2 and 3:         " + Math.max(2, 3));
+    System.out.println("5th power of 6:             " + Math.pow(6, 5));
+    System.out.println("Square root of 7:           " + Math.sqrt(7));
+    System.out.println("Sin of 8 radians:           " + Math.sin(8));
+    System.out.println("Random number (0.0 to 1.0): " + Math.random());
+  }
+}
+----
+
+[source, bash]
+----
+--- Result ---
+Natural logarithm of 10:    2.302585092994046
+Absolute value of -10:      10
+Maximum of 2 and 3:         3
+5th power of 6:             7776.0
+Square root of 7:           2.6457513110645907
+Sin of 8 radians:           0.9893582466233818
+Random number (0.0 to 1.0): 0.8520107471627543
+----
+
+== 125: 연습 문제
+어떤 행성의 부피를 미터로 계산하는 프로그램을 작성하세요. sphereVolume라는 메소드에서 부피 계산을 수행하도록 합니다. 반지름을 main 메소드에 전달하여 제공하도록 합니다.
+
+== 126: 연습 문제
+운동하는 질량의 에너지 공식은
+
+[stem]
+++++
+2\frac 1
+++++
+
+으로 주어집니다. 두 지정된 속도에서 이동하는 자동차의 에너지 비율을 결정하는 프로그램을 작성하세요. 솔루션에서 square라는 메소드를 작성하고 사용하세요.
+마일
+시간
+ 
+으로 움직이는 자동차와
+마일
+시간
+ 
+으로 움직이는 다른 자동차의 에너지 비율을 결정하기 위해 프로그램을 사용하세요. double 유형의 숫자를 사용하세요.
+
+127: 정리
+메소드를 호출할 때마다 해당 메소드의 인수가 평가되고 결과 값의 복사본이 메소드의 매개 변수에 할당됩니다. 그런 다음 메소드의 본문에서 문장이 평가됩니다. return 문이 평가되면 반환 식의 인수가 평가되고 해당 값이 메소드 호출의 값이 됩니다.
+Java의 모든 메소드는 클래스 정의 내에서 정의됩니다.
+각각이 서로 다른 클래스에 나타나는 경우 각각이 매개 변수 데이터 유형의 동일한 패턴을 갖는 많은 동일한 이름의 메소드를 정의할 수 있습니다.
+각각이 고유한 매개 변수 데이터 유형 패턴을 갖도록 여러 동일한 이름의 메소드를 동일한 클래스에서 정의할 수 있습니다.
+공개 클래스에서 공개 클래스 메소드를 정의하려면 다음 패턴을 사용합니다.
+public class class name {
+  public static return type method name (
+  	[data type 1] [parameter 1], 
+  	..., 
+		[data type l] [parameter l]) {
+		declaration 1
+		...
+		declaration m
+		statement 1
+		...
+		statement n
+	}
+}
+반환 값이 없는 메소드를 정의하려면 일반 데이터 유형 선언 대신 void를 제공합니다.
+다른 클래스에서 클래스 메소드를 호출하려면 클래스 및 메소드 이름을 지정하고 마침표로 결합합니다.
+[class name].[method name](ordinary arguments)
