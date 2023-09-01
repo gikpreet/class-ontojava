@@ -1,0 +1,227 @@
+= Chapter 8: 클래스 변수 선언
+
+이 장에서는 클래스 변수에 대해 배웁니다. 이런 변수는 널리 접근 가능한 값이 필요한 경우 특히 유용합니다.
+
+== 148
+
+영화 평점 계산 방식을 가중치를 도입하여 조정하고 싶다고 가정해봅시다. 이러한 가중치를 직접 영화 평점 메소드에 삽입할 수 있습니다.
+
+[source, java]
+----
+public class Movie {
+  // Define movieRating:
+  public static int movieRating (int s, int a, int d) {
+	  return 6 * s + 13 * a + 11 * d;
+  }
+}
+----
+
+하지만 이러한 직접 삽입은 좋은 생각이 아닙니다. 프로그램이 커지면서 숫자를 프로그램 전체에 흩뿌리면 문제가 발생하기 때문입니다.
+
+더 안전한 방법은 변수를 사용하는 것입니다. 하지만 지역 변수는 블록 실행 중에만 존재하기 때문에 지역 변수를 사용할 수 없습니다.
+
+== 149
+
+클래스가 클래스 메소드의 저장소 역할을 수행하는 것 처럼 클래스 변수의 저장소 역할도 수행합니다.
+
+[source]
+----
+A class definition 
+*--------------------* 
+|                    | 
+| Class methods      | 
+|                    | 
+| Class variables    | 
+|                    | 
+| .                  | 
+| .                  | 
+| .                  | 
+|                    | 
+*--------------------* 
+----
+
+지역 변수와 마찬가지로 클래스 변수에 대해 Java에게 알리는 방법른 비슷하지만 중요한 차이점이 있습니다. 먼저 클래스 변수는 메소드 정의의 body가 아닌 클래스 정의의 body 내에서 선언됩니다. 두 번째, 클래스 변수 선언에는 *static* 키워드가 사용되어 인스턴스 변수와 구별됩니다. 인스턴스 변수는 Chapter 9장에서 학습합니다.
+
+[source]
+----
+public class Movie {
+  public static int wScript;
+        ------ --- --------
+          ^     ^   ^
+          |     |   *-- 변수 이름
+          |     *-- 변수 타입
+          *-- 클래스 변수 마커
+  // 클래스 정의 나머지 부분
+}
+----
+
+지역 변수를 초기화 할 수 있는 것처럼 클래스 변수도 초기화 할 수 있습니다.
+
+[source, java]
+----
+public class Movie {
+  // 클래스 변수 정의:
+  public static int wScript = 6;
+  ...                         ^
+}                             *-- 초기값
+----
+
+== 151
+
+여러 클래스 변수를 결합할 수 있습니다. 다음 예에서는 몇 가지 클래스 변수를 선언하고 초기화하여 *movieRating* 메소드에 리터럴 숫자 대신 사용할 수 있습니다.
+
+[source, java]
+----
+public class Movie {
+  // 클래스 변수 정의:
+  public static int wScript = 6;
+  public static int wActing = 13;
+  public static int wDirection = 11;
+  // movieRating 정의:
+  public static int movieRating (int s, int a, int d) {
+	  return wScript * s + wActing * a + wDirection * d;
+  }
+}
+----
+
+변수 이름을 사용하여 클래스 변수 값에 액세스 할 수 있습니다. 변수와 해당 변수가 정의된 메소드가 동일한 클래스에 정의되어 있기 때문입니다.
+
+== 152
+
+151 항목에서와 같이 *Movie* 클래스와 *movieRating* 메소드를 정의하면 *Demonstrate* 프로그램을 사용하여 다음과 같은 결과를 얻을 수 있습니다.
+
+[source, java]
+----
+public class Demonstrate {
+  public static void main (String [] args) {
+    int script = 6;
+    int acting = 9;
+    int direction = 8;
+    
+    System.out.print("The rating of the movie is ");
+    System.out.println(Movie.movieRating(script, acting, direction));
+  }
+}
+----
+
+[source]
+----
+The rating of the movie is 241
+----
+
+== 153
+
+151 항목의 공개 클래스 변수는 키워드 *public*으로 표시되어 있으므로 메소드가 사용하는 클래스와 다른 클래스에서 정의된 공개 클래스 변수에 액세스 하려면 클래스 이름, 점(.), 변수 이름을 사용하여 클래스 메소드에 액세스하는 것과 같은 방식으로 액세스해야 합니다. 예를 들어 Demonstrate 클래스에서 wScript 변수의 값을 액세스 하려면 다음 표현식을 작성합니다.
+
+[source, java]
+----
+*-- 클래스 이름
+|
+|     *-- 변수 이름
+v     v
+----- --------
+Movie.wScript
+----
+
+Java 프로그래머는 적절한 클래스의 필드에서 값을 선택하는 방식으로 생각합니다. 따라서 (.)은 *필드 선택 연산자(field-selection operator)라고 부릅니다.
+
+== 154
+
+Parameter 또는 로컬 변수와 이름이 같은 경우를 제외하고는 동일한 클래스에 정의된 메소드에서 클래스 변수에 액세스하려면 클래스 이름과 필드 선택 연산자를 필요가 없습니다. 이러한 parameter 또는 로컬 변수는 해당 클래스 변수를 *파악*하거나 *재정의*합니다.
+
+Parameter 또는 로컬 변수와 이름이 같은 경우에도 할당 문에서 클래스 이름을 사용하여 클래스 변수의 값을 변경할 수 있습니다. 에를 들어 스크립트 평점의 가중치로 사용되는 클래스 변수의 값을 변경하려면 다음 할당 문을 작성할 수 있습니다.
+
+[source, java]
+----
+  *-- 클래스 이름
+  |  *-- 필드 선택 연산자
+  |  |  *-- 변수 이름
+  |  |  |       *-- 새 값
+  v  v  v       | 
+----- --------  v 
+Movie.wScript = 7;
+----
+
+== 155
+
+**wScript**와 같은 클래스 변수와 같이 변경되지 않을 클래스 변수가 있다면 변수 선언에서 키워드 **final** 을 사용하여 Java에서 변경하지 않을 것임을 알려야 합니다. *final* 키워드는 변수가 전혀 변수가 아니라는 것을 나타냅니다. 즉, 변수가 초기화된 후 값이 변경되지 않으므로 이러한 변수는 *상수*입니다. 
+
+[source, java]
+----
+public static final int wScript = 6;
+public static final int wActing = 13;
+public static final int wDirection = 11;
+----
+
+상수는 초기화해야 하므로 나중에 값이 할당될 수 있습니다.
+
+== 156
+
+일반적으로 *선언*은 컴파일러에 필수 정보다 유용한 조언을 제공하는 프로그램 요소입니다. 예를 들어 지역 변수나 파라미터를 도입할 때 해당 변수의 타입을 지정하여 선언합니다. 반면 지역 변수 메모리나 파라미터 메모리는 컴파일 타임에 할당되지 않습니다. 메소드가 호출되기 전에 지역 변수 메모리나 파라미터 메모리는 존재하지 않습니다.
+
+반면 정의는 컴파일러가 컴파일 타임에 메모리를 할당하도록 하는 프로그램 요소입니다. 예를 들어 클래스 변수를 도입하면 해당 변수의 타입에 대한 정보를 컴파일러에게 알리고 컴파일 타임에 변수의 메모리를 할당합니다.
+
+일반적으로 변수가 선언되고 정의되면 약어 구문으로 해당 변수가 정의되었다고 말합니다. 그렇지 않으면 변수가 선언됩니다.
+
+== 157
+
+공개 클래스에서 정의된 공개 클래스 변수는 프로그램의 어느 지점에서도 평가하고 할당할 수 있으므로 공개 클래스 변수는 **범위**가 **전체**입니다.
+
+클래스 변수에 할당된 메모리는 다시 할당되지 않으므로 클래스 변수는 **정적** 범위를 가집니다. 이것이 **static**이라는 키워드가 클래스 변수를 표시하는 이유입니다.
+
+== 158
+
+클래스 변수를 사용하면 프로그램의 동작을 결정하는 가중치와 같은 값을 모으는 방법을 제공합니다. 이렇게 모은 요소를 찾기 쉽게 만들면 프로그램을 이해하기 쉬워집니다.
+
+== 159
+
+Java의 클래스 변수는 다른 언어에서 사용되는 전역 변수(global variable)의 역할을 대신합니다. 클래서 변수는 전역 변수와 매우 유사하지만 각 클래스 변수는 클래스와 관련이 있습니다.
+
+== 160
+
+Java는 *Math* 클래스에 대해 두 가지 유용한 *final* 키워드 변수를 제공합니다. 다음은 예시입니다.
+
+[source, java]
+----
+public class Demonstrate {
+  // First, define displayMovieRating with integers:
+  public static void main (String [] args) {
+    System.out.println("Value of pi: " + Math.PI);
+    System.out.println("Value of e:  " + Math.E);
+  }
+}
+----
+
+[source]
+----
+Value of pi: 3.141592653589793
+Value of e:  2.718281828459045
+----
+
+== 161: 연습 문제
+
+145 항목에서 작성하도록 요청된 온도 변환 메소드를 수정하여 메소드가 호출될 때마다 호출된 충 횟수를 보고하도록 하십시오.
+
+== 162: Summary
+
+* 어디서나 접근 가능한 값을 갖는 변수가 필요하다면, 다음과 같은 패턴을 이용하여 public 클래스 변수를 정의하십시오:
+
+[source, java]
+----
+public static data_type variable_name;
+----
+
+* public 클래스 변수의 값을 접근하려면, 다음과 같이 적용합니다.
+
+[source, java]
+----
+... class_name.variable_name ...
+class_name.variable_name = new_value_expression;
+----
+
+* 변수를 상수로 만들고 싶다면, 변수 선언에 키워드 final을 추가하고, 선언문에서 변수를 초기화하십시오.
+
+[source, java]
+----
+public static final data_type variable_name   = new_value_expression; 
+----
