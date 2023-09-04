@@ -97,4 +97,287 @@ public class Movie {
 
 == 170
 
-156 항목에서는 **선언(declaration)**이 컴파일러에 정보를 제공하는 프로그램 요소인 것을 언급했습니다. 반면 **정의(definition)**는 컴파일러가 저장소를 할당하도록 유도합니다. 인스턴스 변수만이 나타내는 클래스 정의는 저장소가 할당되는 경우에만 이루어집니다. 따라서,
+156 항목에서는 **선언(declaration)**이 컴파일러에 정보를 제공하는 프로그램 요소인 것을 언급했습니다. 반면 **정의(definition)**는 컴파일러가 저장소를 할당하도록 유도합니다. 인스턴스 변수만이 나타내는 클래스 정의는 저장소가 할당되는 경우에만 이루어집니다. 따라서, 철저히 구분하기 위해서는 저장소가 할당되지 않는 한 **클래스 선언(class declaration)**이라고 하는 것이 정확합니다. 그러나 프로그래머들이 클래스에 대해 이야기 할 때는 선언과 정의의 차이점이 희미해지고, 저장소가 할당죄었는지 여부와 관계없이 **클래스 정의(class definition)**라는 구문이 사용될 때가 많습니다.
+
+== 171
+
+다른 프로그래밍 언어에서는 인스턴스 변수를 멤버 변수(member variable), 필드(field), 슬롯(slot)이라고 부릅니다. **슬롯(slot)**과 같은 용어는 클래스 정의를 패턴으로 생각하고 클래스 인스턴스를 채워진 패턴으로 생각하도록 유도한다는 점에서 좋은 용어라 할 수 있습니다. 그러나 관례에 따라, 여기에서는 **인스턴스 변수(instance variable)**이라는 용어를 사용합니다.
+
+== 172
+
+**Movie** 클래스가 정의되면, 다음과 같이 **Movie**를 변수의 data type으로 사용하여 변수를 도입할 수 있습니다.
+
+[source, java]
+----
+  *--클래스 이름
+  |
+  |   *-- 변수 이름
+  |   |
+  v   v
+Movie m;
+----
+
+이 구문은 data type으로 **int** 또는 **double**등을 사용하여 변수를 도입할 때와 동일합니다.
+
+== 173
+
+**new** 키워드와 클래스 이름, 괄효 쌍을 사용하여 다음 식 처럼 Movie 인스턴스를 생성합니다.
+
+[source, java]
+----
+ *-- 키워드
+ |
+ |   *-- 클래스 이름
+ |   |
+ v   v
+new Movie()
+----
+
+216 항목에서 이 괄호의 필요성을 학습합니다.
+
+== 174
+
+정수 또는 부동 소수점 type을 가진 변수에 대해 변수 선언과 초기화를 결합할 수 있는 것 처럼, 클래스가 유형인 변수의 선언과 초기화를 결합할 수 있습니다.
+
+[source, java]
+----
+  *--  클래스 이름
+  |   *-- 변수 이름
+  |   |    *-- 키워드
+  |   |    |    *-- 클래스 이름
+  v   v    v    v
+Movie m = new Movie();
+----
+
+== 175
+
+변수를 생성하고 **Movie** 클래스의 인스턴스를 할당한 후에는 인스턴스의 **script**, **acting**, **direction** 인스턴스 변수를 참조할 수 있습니다. 인스턴스 변수를 참조하려면 **Movie** 변수의 이름을 필드 선택 연산자를 통해 해당하는 인스턴스 변수의 이름에 연결하면 됩니다. 따라서, m.script는 m이라는 이름의 변수에 할당된 **Movie** 인스턴스의 **script** 인스턴스 변수 값을 생성합니다.
+
+**Movie** 인스턴스의 인스턴스 변수를 참조하는 방법을 알게되면, 이전에 할당된 값을 검색하고 인스턴스 변수에 새 값을 할당할 수 있습니다.
+
+[source, java]
+----
+... m.script ... <-- script 인스턴스 변수에서 값을 검색합니다.
+m.script = 3;   <-- script 인스턴스 변수에 새 값을 할당합니다.
+----
+
+== 176
+
+다음은 세 개의 인스턴스 변수와 **movieRating** 클래스 메소드가 포함된 **Movie** 클래스의 정의입니다.
+
+[source, java]
+----
+public class Movie {
+  public int script;
+  public int acting;
+  public int direction;
+
+  public static int movieRating (int s, int a, int d) {
+	  return s + a + d;
+  }
+}
+----
+
+== 177
+
+다음은 Movie 인스턴스가 생성되고 인스턴스 변수에 값이 할당되며 **movieRating**이라는 클래스 메소드에 의해 **Movie** 인스턴스의 등급이 계산된 **Demonstrate** 클래스의 정의입니다. 필드 선택 연산자가 자주 사용됩니다.
+
+[source, java]
+----
+public class Demonstrate {
+  public static void main (String [] args) {
+    Movie m = new Movie();
+    m.script = 8;
+    m.acting = 9;
+    m.direction = 6;
+
+    System.out.print("The rating of the movie is ");
+    System.out.println(
+      Movie.movieRating(m.script, m.acting, m.direction)
+    );
+  }
+}
+----
+
+== 178
+
+**movieRating**에 세 개의 정수 argument를 전달하는 대신, Movie 인스턴스를 선언하는 하나의 argument를 사용하는 Rating 메소드를 작성할 수 있습니다. 물론 body를 변경해야 합니다. **s**, **a**, **d** parameter 대신, body는 **Movie** 인스턴스의 **script**, **acting**, **direction** 인스턴스 변수를 참조해야 합니다.
+
+[script, java]
+----
+public class Movie {
+  public int script;
+  public int acting;
+  public int direction;
+
+  public static int rating (Movie m) {
+	  return m.script + m.acting + m.direction;
+  }
+}
+----
+
+이 세그먼트에서 정의된 메소드는 영화만을 대상으로 하기 때문에, 메소드를 movieRating으로 호출할 필요가 없습니다. 메소드는 영화가 아닌 argument에 대해 호출할 수 없습니다.
+
+== 179
+
+**script**, **acting**, **direction** 값 대신 **Movie** 인스턴스에서 작동하도록 정의된 **rating** 메소드가 있다면 177 항목의 프로그램을 다시 작성할 수 있습니다.
+
+[source, java]
+----
+public class Demonstrate {
+	public static void main (String [] args) {
+    Movie m = new Movie();
+    m.script = 8;
+    m.acting = 9;
+    m.direction = 6;
+    System.out.print("The rating of the movie is ");
+    System.out.println(Movie.rating(m));
+  }
+}
+----
+
+== 180
+
+**산술(Arithmetic)** 타입은 화학에서의 원자와 았습니다. 특정 정수 및 부동 소수점 값은 분해할 수 없습니다. 따라서 해당 데이터 타입은 **원시 타입(primitive type)**중 하나입니다. 원시 타입에는 Chapter 21에서 학습할 boolean type도 포함됩니다.
+
+primitive type과 대조적으로, 이 장에서 배운 클래스 인스턴스는 일반 화학에서의 분자와 같습니다. 특정 인스턴스를 분해 할 수 있습니다. 이러한 데이터 타입을 **참조 타입(Reference type)**이라고 합니다.
+
+== 181
+
+Reference type 변수의 기본 값은 null 입니다. 이 값은 변수에 클래스 인스턴스가 할당되지 않음을 나타냅니다.
+
+== 182
+
+**Movie** 및 **Demonstrate** 클래스는 현재까지 공부한 유일한 클래스가 아닙니다. 프로그램에서 많은 문자열을 사용했는데, 문자열은 실제로 String 클래스의 인스턴스입니다. 167 항목에서 언급된 규약에 따라 String 인스턴스는 간단히 **문자열**로도 알려져 있습니다.
+
+== 183
+
+Primitive type의 경우 변수 또는 parameter를 값이 들어있는 메모리 뭉치의 레이블로 생각할 수 있습니다.
+
+[source]
+----
+원시 타입 변수에 할당 된 메모리
+  |
+  v
+*---------*
+|  Value  |
+*---------*
+----
+
+반면에 변수 또는 parameter가 reference type인 경우, 해당 변수를 가리키는 메모리 뭉치의 레이블로 생각할 수 있습니다. 즉, **reference type 변수**는 다른 메모리 뭉치의 메모리를 가리키는 메모리 뭉치의 레이블입니다.
+
+[source]
+----
+참조 타입 변수에 할당 된 메모리
+  |
+  v
+*---------*           *-----------*
+| Address | --------> | Instance  |
+*---------*           |           |
+                      |           |
+                      *-----------*
+----
+
+== 184
+
+Chapter 6에서 Java는 값에 의한 호출(call-by-value) 언어임을 배웠습니다. 메소드를 호출할 때 마다 각 parameter에 대해 메모리가 할당되므로 메소드 내에서 parameter 재 할당은 메소드 외부로 전파되는 것을 방지합니다.
+
+인수가 reference type 변수인 경우, parameter에 할당된 메모리에는 argument 주소의 복사본이 저장됩니다. 두 주소는 동일한 위치를 가리킵니다.
+
+[source]
+----
+호출 메서드의 참조 변수에 할당 된 메모리       호출 된 메서드의 값 제공 메모리
+  |                                   |
+  v                                   v
+*----------*     Copy operation     *----------*
+| Address  | ---------------------> | Address  |
+*----------*                        *----------*
+  |                                   |
+  |       *---------------------------*
+  v       v
+*----------*
+| Instance |
+|          |
+*----------*
+----
+
+주소가 변겨오디므로 메소드 내에서 parameter 재할당이 메소드 외부로 전파될 수 있습니다.
+
+== 185
+
+클래스 인스턴스를 메소드에 argument로 전달한 다음 해당 메소드 내에서 parameter를 사용하여 인스턴스 변수를 재할당 한다고 가정해 봅시다. 그러면 argument와 parameter가 클래스 인스턴스에 대해 동일한 메모리 뭉치를 공유하므로 인스턴스 변수에 대한 변경사항이 메소드 호출 후에도 유지됩니다.
+
+== 186
+
+클래스 인스턴스에 할당된 메모리가 더 이상 접근할 수 없을 때, 할당된 메모리 뭉치가 어떻게 되는지 궁금할 것입니다. 예를 들어, 변수에 인스턴스가 재 할당될 때 더 이상 액세스 할 수 없는 인스턴스가 생성됩니다.
+
+[source]
+----
+...
+movie m;             <-- 선언
+...
+m = new movie();     <-- 할당
+...
+m = new movie();     <-- 재할당; 첫 번째 클래스 인스턴스 방치
+...
+----
+
+답은 Java에 버려진, 즉 더 이상 사용되지 않는, 도달할 수 없는 클래스 인스턴스에 할당된 메모릴르 찾는 메커니즘이 내장되어 있다는 것입니다. 이런 클래스 인스턴스는 추가적인 계산을 수행할 수 없기 때문에, 메모리 공간만 낭비합니다. 따라서 Java는 메모리를 **자유 저장소 공간(free-storage list)**에 반환하여 해당 메모리를 새롭고 유용한 클래스 인스턴스 생성에 사용할 수 있게 만듭니다.
+
+버려진 메모리를 free-storage list에 반환하는 프로세스를 **가비지 컬렉션(garbage collection)**이라고 부릅니다.
+
+== 187: 부가 설명
+
+Java에는 자동 가비지 컬렉션이 있으므로, 수동으로 메모리를 회수하는 메커니즘이 없습니다. 자동 가비지 컬렉션은 수동 메모리 회수의 불편함을 없애주며, C++ 프로그래머가 자주 겪는 메모리 누수를 제거합니다.
+
+== 188: 연습 문제
+
+**Movie** 클래스와 같이 클래스를 정의하는 방법을 활용하여 철도 화물칸을 표시할 수 있는 **BoxCar** 클래스를 만드세요. 개별 화물칸의 높이, 너비, 길이에 대한 인스턴스 변수를 포함하세요.
+
+== 189: 연습 문제
+
+**BoxCar** 클래스에 대한 **volume** 클래스 메소드를 작성하세요.
+
+== 190: Summerize
+
+* Java 클래스는 카테고리에 해당하며, Java 클래스 인스턴스는 각각의 물체에 해당합니다.
+* 클래스 정의에는 일반적으로 멤버 변수(member variable), 슬롯(slot), 필드(field)라고 불리는 인스턴스 변수가 정의됩니다.
+* public 인스턴스 변수가 있는 클래스를 정의하려면, 다음과 같이 적용합니다.
+
+[source, java]
+----
+public class class name {
+ ...
+ public instance_variable_type instance_variable_name;
+ ...
+}
+----
+
+* 변수의 값이 클래스 인스턴스 일 수 있는 변수를 선언하려면, 다음과 같이 적용합니다.
+
+[source, java]
+----
+class_name variable_name;
+----
+
+* 새로운 클래스를 만들고 해당 클래스 인스턴스를 변수에 할당하려면, 다음과 같이 적용합니다.
+
+[source, java]
+----
+class_name variable_name = new class_name();
+----
+
+* 클래스 인스턴스로 초기화 된 변수를 선언하려면, 다음과 같이 적용합니다.
+
+[source, java]
+----
+class_name variable_name = new class_name();
+----
+
+* 인스턴스 변수 값을 액세스하려면, 다음과 같이 적용합니다.
+
+[source, java]
+----
+... variable_name.instance_variable_name ...
+variable_name.instance_variable_name = new_value_expression;
+----

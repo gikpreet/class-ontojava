@@ -22,14 +22,14 @@ public class Movie {
 
 [source, bash]
 ----
-movieRating fence-----------------*   The values of s, a, and d  
-| The value of s, a, and d inside |   outside the fence, if any, 
-| this fence are isolated from    |   are not affected by the 
-| the values outside              |   values inside 
-|                                 | 
-| movieRating method computes the | 
-| value of s + a + d using the    | 
-| values inside this fence        | 
+movieRating fence-----------------*   The values of s, a, and d
+| The value of s, a, and d inside |   outside the fence, if any,
+| this fence are isolated from    |   are not affected by the
+| the values outside              |   values inside
+|                                 |
+| movieRating method computes the |
+| value of s + a + d using the    |
+| values inside this fence        |
 *---------------------------------*
 ----
 
@@ -39,14 +39,14 @@ Java가 각 메소드 Parameter에 대해 메모리 뭉치를 예약하고, 메�
 
 [source, java]
 ----
-Memory reserved                 Memory that supplies a value for 
-for a variable in               a corresponding parametern in 
-calling program                 called program 
-  |                               | 
-  v                               v 
-*------*     Copy operation     *------* 
-|      | ---------------------> |      | 
-*------*                        *------* 
+Memory reserved                 Memory that supplies a value for
+for a variable in               a corresponding parametern in
+calling program                 called program
+  |                               |
+  v                               v
+*------*     Copy operation     *------*
+|      | ---------------------> |      |
+*------*                        *------*
 ----
 
 예를 들어 **moveiRating**을 고려할 때, 정수 parameter s, a, d 각각에 대해 새로운 메모리 뭉치가 예약되며 argument 값이 해당 메모리 뭉치로 복사됩니다.
@@ -76,35 +76,6 @@ Parameter가 참조에 의한 호출 parameter이고, 대응되는 인수가 변
 
 == 133
 
-다음 프로그램은 parameter 값의 제한된 사용 가능성을 보여주기 위해 **movingRating**을 어색하게 정의합니다.
-
-[source, java]
-----
-public class Demonstrate {
-  // First, define adder:
-  public static int adder () {
-	  return s + a + d;                                     // BUG!
-  }
-  // Next, define movieRating:
-  public static int movieRating (int s, int a, int d) {
-  	return adder();                                       // BUG!
-  }
-  // Then, define main:
-  public static void main (String [] args) {
-    int script = 6;
-    int acting = 9;
-    int direction = 8;
-    int result;
-    
-    result = movieRating(script, acting, direction);
-    System.out.print("The rating of the movie is ");
-    System.out.println(s + a + d);                       // BUG!
-  }
-}
-----
-
-== 133
-
 다음 프로그램은 parameter 값의 제한된 사용 가능성을 보여주기 위해 **movieRating**을 어색하게 정의합니다.
 
 [source, java]
@@ -124,7 +95,7 @@ public class Demonstrate {
     int acting = 9;
     int direction = 8;
     int result;
-    
+
     result = movieRating(script, acting, direction);
     System.out.print("The rating of the movie is ");
     System.out.println(s + a + d);                       // BUG!
