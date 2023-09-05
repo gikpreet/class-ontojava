@@ -1,0 +1,222 @@
+= Chapter 11: 생성자 선언
+
+이 단원에서는 클래스 인스턴스를 생성할 때 호출되는 특수한 메소드인 생성자 메소드(Constructor)에 대해 학습합니다.
+
+== 205
+
+Chapter 9에서 하나의 문장으로 인스턴스를 생성하고, 인스턴스 변수를 다른 문장으로 초기화하는 방법을 보았습니다. 다음은 **Movie** 변수 **m**에 대한 인스턴스 생성 및 초기화를 보여줍니다.
+
+[source, java]
+----
+Movie m = new Movie();
+m.script = 8;
+m.acting = 9;
+m.direction = 6;
+----
+
+새 **Movie** 인스턴스가 생성되면 모든 Arithmetic 변수에 0이 할당됩니다. 그리고 세 개의 statement가 해당 인스턴수 변수에 값을 다시 할당합니다.
+
+== 206
+
+Java는 지역 변수 및 클래스 변수와 동일한 방식으로 인스턴스 변수를 초기화 할 수 있습니다. 예를 들어, 모든 **Movie** 인스턴스의 인스턴스 변수에 초기값 3을 할당할 수 있도록 할 수 있습니다.
+
+[source, java]
+----
+public class Movie {
+  public int script = 3;
+  public int acting = 3;
+  public int direction = 3;
+
+  public int rating () {
+	  return script + acting + direction;
+  }
+}
+----
+
+인스턴스 변수를 초기화하지 않은 경우 해당 변수는 자료형에 대한 **기본 값**이 지정됩니다. Arithmetic 변수의 기본값은 0입니다.
+
+== 207
+
+Java는 또한 클래스 인스턴스를 생성할 때 자동으로 호출되는 **생성자**라는 특수한 메소드를 정의할 수 있도록 합니다. 이러한 생성자를 사용하여 변수 선언 문에서 초기화 값을 제공하는 대신 클래스 인스턴스의 인스턴스 변수에 값을 할당할 수 있습니다.
+
+== 208
+
+클래스 정의에서 생성자 메소드는 두 가지 측면에서 다른 인스턴스 메소드와 구별됩니다.
+
+* 생성자 메소드 이름은 클래스 이름과 같습니다.
+* 생성자 메소드는 새로운 클래스 인스턴스를 return 합니다. return type은 명시적으로 지정되지 않습니다.
+
+== 209
+
+**Movie** 클래스에 대한 parameter가 없는 생성자를 정의하려면 다음과 같이 작성합니다.
+
+[source, java]
+----
+      *-- 반환 유형이 지정되지 않음
+      |  *-- 생성자 이름은 클래스 이름과 같습니다
+      |  |
+      v  v
+public Movie() {
+...
+}
+----
+
+== 210
+
+다음 프로그램에서 **Movie** 클래스 정의는 모든 **Movie** 인스턴스에 대한 일반적인 등급을 나타내는 **5**를 모든 인스턴스 변수에 할당하는 생성자 메소드를 포함합니다.
+
+[source, java]
+----
+public class Movie {
+    public int script;
+    public int acting;
+    public int direction;
+
+	public Movie() {
+        script = 5;
+        acting = 5;
+        direction = 5;
+    }
+
+    public int rating () {
+  	    return script + acting + direction;
+    }
+}
+----
+
+210 항목에서 소개된 **Movie** 클래스의 새로운 정의를 사용하는 다음 **main** 메소드는 인스턴스 변수에 값을 할당할 필요가 없습니다.
+
+[source, java]
+----
+public class Demonstrate {
+  // Define main:
+  public static void main (String argv[]) {
+  	Movie m = new Movie();
+	  System.out.println("The rating of the movie is " + m.rating());
+  }
+}
+----
+
+[source]
+----
+--- 결과 ---
+The rating of the movie is 15
+----
+
+== 212
+
+이제 특정 **Movie** 인스턴스를 생성할 때 **script**, **acting**, **direction** 인스턴스 변수에 값을 제공하려는 경우 세 개의 매개 변수를 사용하는 생성자를 정의해야 합니다.
+
+[source, java]
+----
+public class Movie {
+    public int script;
+    public int acting;
+    public int direction;
+
+    public Movie() {
+	    script = 5;
+	    acting = 5;
+	    direction = 5;
+    }
+
+    public Movie(int s, int a, int d) {
+      	script = s;
+  	    acting = a;
+  	    direction = d;
+    }
+
+    public int rating () {
+  	    return script + acting + direction;
+    }
+}
+----
+
+세 parameter를 사용하는 생성자는 인스턴스 변수를 초기화하는 제로 parameter 생성자와 마찬가지로 해당 클래스에서 정의됩니다.
+
+== 213
+
+Java에게 세 parameter 생성자를 사용하라고 지시하려면 **Movie** 생성 문을 수정합니다.
+
+[source, java]
+----
+ *-- m을 Movie 클래스의 변수로 선언
+ |
+ |                     *-- 세 개의 인수를 사용하는 인수 목록 사용
+ |                     v
+ v                  -------
+Movie m = new Movie(8, 9, 6);
+----
+
+argument는 세 parameter 생성자를 사용하여 초기화되어야 함을 나타냅니다. 기본 parameter 생성자를 사용하여 초기화를 수행하지 않습니다.
+
+== 214
+
+다음 프로그램은 기본 parameter 생성자와 세 parameter 생성자 모두를 사용합니다.
+
+[source, java]
+----
+public class Demonstrate {
+  // Define main:
+  public static void main (String argv[]) {
+    Movie m1 = new Movie();
+    Movie m2 = new Movie(8, 9, 6);
+    System.out.println("The first movie rating is " + m1.rating());
+    System.out.println("The second movie rating is " + m2.rating());
+  }
+}
+----
+
+[source, java]
+----
+--- 결과 ---
+The first movie rating is 15
+The second movie rating is 23
+---
+----
+
+== 215
+
+생성자를 정의하지 않은 경우, Java는 아무런 동작도 수행하지 않는 **기본 생성자**를 정의합니다. 기본 생성자는 parameter가 없는 생성자입니다.
+
+== 216
+
+173 항목의 인스턴스 생성식이 작동하는 방식 및 괄호의 이유를 이해할 수 있습니다.
+
+[source, java]
+----
+new Movie()
+----
+
+== 217
+
+모든 생성자가 호출되기 전에 모든 인스턴스 변수가 초기화됩니다. 따라서 인스턴스 변수에 대한 생성자에서 제공한 초기값은 변수 선언문에서 제공한 초기값을 대체합니다.
+
+== 218: 부가 설명
+
+parameter를 갖는 생성자를 정의하고 argument 생성자를 사용하여 인스턴스를 생성하는 경우 클래스 정의에서 parameter가 없는 생성자의 정의를 포함해야 합니다.
+
+이유는 다음과 같습니다. parameter가 없는 생성자를 정의하지 않은 경우 argument가 없으면 parameter를 가지는 생성자에 대한 argument를 누락한 것으로 간주됩니다.
+
+== 220 summary
+
+* 생성자는 프로그램이 인스턴스를 생성할 때 수행하려는 인스턴스 변수 할당과 같은 계산을 수행합니다.
+* 각 생성자는 해당 클래스에 정의된 이름으로 지정됩니다. 모든 생성자는 클래스 인스턴스를 반환합니다.
+* 사용자가 정의한 생성자가 없는 경우, Java는 parameter가 없는 기본 생성자를 생성합니다.
+* **parameter가 없는 생성자**를 정의하려면, 아래와 같이 작성합니다.
+
+[source, java]
+----
+public class_name() {
+     ...
+}
+----
+
+* **parameter가 있는 생성자**를 정의하려면, 아래와 같이 작성합니다.
+
+[source, java]
+----
+public class_name(parameter specfications) {
+    ...
+}
+----
