@@ -321,7 +321,7 @@ java Demonstrate
 * 간단한 프로그램을 테스트 할 때 종종 프로그램 작성 시 제공한 데이터를 사용합니다. 이러한 데이터는 wired in 또는 hard coded이라고 합니다.
 
 * 데이터를 표시하려면 display statement을 사용하십시오.
-
++
 [source, java]
 ----
 System.out.print(표시할 값의 표현식) ;
